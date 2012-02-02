@@ -1,16 +1,17 @@
 require 'singleton'
+require 'liquid-proxy/subprocess'
 
 class LiquidProxy
   include Singleton
+
+  attr_reader :host, :port
 
   def headers_to_inject
     {}
   end
 
-  def port
-  end
-
-  def host
+  def start(opts = {:port => 8998, :host => 'localhost'})
+    Subprocess.start(opts)
   end
 
   def self.method_missing(*args)

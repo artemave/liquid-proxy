@@ -1,11 +1,12 @@
-Given /^I have http client using liquid\-proxy$/ do
+Given /^liquid-proxy is running$/ do
+  LiquidProxy.start
 end
 
 When /^I instruct liquid\-proxy to add header "([^"]*)" with value "([^"]*)"$/ do |header, value|
   LiquidProxy.headers_to_inject[header] = value
 end
 
-When /^the client makes http request to a server$/ do
+When /^an http client makes request to a server via liquid-proxy$/ do
   proxy_class = Net::HTTP::Proxy(LiquidProxy.host, LiquidProxy.port)
   res = proxy_class.start("localhost", TEST_APP_SERVER_PORT) do |http|
     http.get "/"
