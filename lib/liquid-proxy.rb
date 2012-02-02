@@ -1,5 +1,5 @@
 require 'singleton'
-require 'liquid-proxy/subprocess'
+require 'liquid-proxy/service'
 
 class LiquidProxy
   include Singleton
@@ -11,7 +11,11 @@ class LiquidProxy
   end
 
   def start(opts = {:port => 8998, :host => 'localhost'})
-    Subprocess.start(opts)
+    Service.start(opts)
+
+    while not Service.up?
+      Kernel.sleep 0.5
+    end
   end
 
   def self.method_missing(*args)

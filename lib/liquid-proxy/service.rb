@@ -1,11 +1,14 @@
 require 'singleton'
 
 class LiquidProxy
-  class Subprocess
+  class Service
     include Singleton
 
     def start(opts = {})
-      puts "HERE"
+    end
+
+    def up?
+      true
     end
 
     def self.method_missing(*args)

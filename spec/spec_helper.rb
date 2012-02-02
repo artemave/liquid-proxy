@@ -7,9 +7,10 @@
 
 
 $: << File.expand_path("../../../lib", __FILE__)
-require 'liquid-proxy'
+
 require_relative 'support/port_explorer'
 require_relative 'support/reset-singleton'
+require 'liquid-proxy'
 
 
 RSpec.configure do |config|
