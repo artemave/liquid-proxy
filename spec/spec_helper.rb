@@ -8,10 +8,7 @@
 
 $: << File.expand_path("../../../lib", __FILE__)
 
-require_relative 'support/port_explorer'
 require_relative 'support/reset-singleton'
-require 'liquid-proxy'
-
 
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true

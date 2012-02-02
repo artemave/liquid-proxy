@@ -1,4 +1,5 @@
 require_relative "spec_helper"
+require 'liquid-proxy'
 
 describe LiquidProxy do
   before do
