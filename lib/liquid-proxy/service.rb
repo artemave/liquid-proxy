@@ -1,6 +1,6 @@
 require 'singleton'
-require 'liquid-proxy/cmd_args_builder'
 require 'liquid-proxy/subprocess'
+require 'utils/port_explorer'
 
 class LiquidProxy
   class Service
@@ -11,11 +11,13 @@ class LiquidProxy
         return
       end
 
+      @port = opts[:port]
+
       @child = Subprocess.new(opts)
     end
 
     def up?
-      true
+      !!(@child && @child.alive? && Utils::PortExplorer.port_occupied?(@port))
     end
 
     def self.method_missing(*args)

@@ -8,13 +8,22 @@ describe LiquidProxy do
 
   it 'starts' do
     LiquidProxy::Service.stub(:up?).and_return(true)
-    LiquidProxy::Service.should_receive(:start).with(:port => 1234, :host => 'google.com')
+    LiquidProxy::Service.should_receive(:start).with(:port => 1234)
 
-    LiquidProxy.start(:port => 1234, :host => 'google.com')
+    LiquidProxy.start(:port => 1234)
+  end
+
+  it 'knows its port' do
+    LiquidProxy::Service.stub(:up?).and_return(true)
+    LiquidProxy::Service.stub(:start)
+
+    LiquidProxy.start(:port => 1234)
+    LiquidProxy.port.should == 1234
   end
 
   context 'when starting' do
     it 'waits for proxy service to come up' do
+      LiquidProxy::Service.stub(:start)
       LiquidProxy::Service.stub(:up?).and_return(false, false, true)
       Kernel.should_receive(:sleep).with(0.5).twice
 

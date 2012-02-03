@@ -4,13 +4,15 @@ require 'liquid-proxy/service'
 class LiquidProxy
   include Singleton
 
-  attr_reader :host, :port
+  attr_reader :port
 
   def headers_to_inject
     {}
   end
 
-  def start(opts = {:port => 8998, :host => 'localhost'})
+  def start(opts = {:port => 8998})
+    @port = opts[:port]
+
     Service.start(opts)
 
     while not Service.up?
