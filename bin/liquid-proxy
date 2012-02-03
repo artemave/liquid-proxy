@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+$: << File.expand_path('../../lib', __FILE__)
+
+require 'liquid-proxy/connection'
+
+Proxy.start(:port => ARGV[0]) do |conn|
+  LiquidProxy::Connection.setup(conn)
+end

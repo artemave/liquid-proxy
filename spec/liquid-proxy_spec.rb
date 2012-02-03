@@ -25,7 +25,7 @@ describe LiquidProxy do
     it 'waits for proxy service to come up' do
       LiquidProxy::Service.stub(:start)
       LiquidProxy::Service.stub(:up?).and_return(false, false, true)
-      Kernel.should_receive(:sleep).with(0.5).twice
+      Kernel.should_receive(:sleep).with(0.5).exactly(3).times
 
       LiquidProxy.start
     end

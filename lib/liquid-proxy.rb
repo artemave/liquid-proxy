@@ -15,7 +15,9 @@ class LiquidProxy
 
     Service.start(opts)
 
+    Kernel.sleep 0.5
     while not Service.up?
+      puts "Waiting for LiquidProxy to start..."
       Kernel.sleep 0.5
     end
   end
