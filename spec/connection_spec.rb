@@ -1,16 +1,17 @@
 require_relative "spec_helper"
 require 'liquid-proxy/connection'
+require 'liquid-proxy/connection_processor'
 
 describe LiquidProxy::Connection do
   context "em-proxy connection setup" do
-    it 'feeds data to request processor' do
-      conn, request_processor = mock, mock
-
+    it 'feeds data to connection processor' do
+      conn = mock
+      conn.should_receive(:extend).with(LiquidProxy::ConnectionProcessor) # this assert stinks?
       conn.should_receive(:on_data) do |&block|
-        request_processor.should_receive(:<<).with("data")
+        conn.should_receive(:process_data).with("data")
         block.call("data")
       end
-      LiquidProxy::Connection.setup(conn, request_processor)
+      LiquidProxy::Connection.setup(conn)
     end
   end
 end

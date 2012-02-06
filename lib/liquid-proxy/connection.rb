@@ -1,9 +1,13 @@
-require 'liquid-proxy/request_processor'
+require 'liquid-proxy/connection_processor'
 
-class LiquidProxy::Connection
-  def self.setup(conn, request_processor = RequestProcessor.new(conn))
-    conn.on_data do |data|
-      request_processor << data
+class LiquidProxy
+  class Connection
+    def self.setup(conn)
+      conn.extend(ConnectionProcessor)
+
+      conn.on_data do |data|
+        conn.process_data(data)
+      end
     end
   end
 end
