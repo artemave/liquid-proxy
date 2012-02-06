@@ -17,3 +17,11 @@ end
 Then /^that server should see header "([^"]*)" with value "([^"]*)" in incoming requests$/ do |header, value|
   @request["HTTP_#{header}"].should == value
 end
+
+When /^I instruct liquid\-proxy to clear custom headers$/ do
+  LiquidProxy.headers_to_inject.clear
+end
+
+Then /^that server should not see header "([^"]*)" in incoming requests$/ do |header|
+  @request.should_not have_key("HTTP_#{header}")
+end
