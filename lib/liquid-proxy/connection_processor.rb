@@ -41,7 +41,7 @@ class LiquidProxy
     end
 
     def headers_to_inject
-      @headers_to_inject ||= {}
+      @headers_to_inject ||= HEADERS_TO_INJECT
     end
   end
 end

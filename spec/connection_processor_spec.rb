@@ -20,6 +20,7 @@ describe LiquidProxy::ConnectionProcessor do
   end
 
   it 'passes request through' do
+    HEADERS_TO_INJECT = {} unless defined?(HEADERS_TO_INJECT)
     new_request = "new_request#{Time.now}"
     parser = stub(:headers => {'Host' => 'localhost'})
     conn.stub(:body => (body = mock), :parser => parser, :request_builder => (request_builder = stub))

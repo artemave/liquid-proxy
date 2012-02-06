@@ -30,4 +30,23 @@ describe LiquidProxy do
       LiquidProxy.start
     end
   end
+
+  context 'header injection' do
+    it 'allows specify header as hash key' do
+      RestClient.should_receive(:post).with("localhost:#{LiquidProxy.port}", {'X_HACK' => 'KABOOM'}.to_json)
+      LiquidProxy.headers_to_inject['X_HACK'] = 'KABOOM'
+    end
+
+    it 'allows specify headers by assigning hash' do
+      RestClient.should_receive(:delete).with("localhost:#{LiquidProxy.port}").ordered
+      RestClient.should_receive(:post).with("localhost:#{LiquidProxy.port}", {'X_HACK' => 'KABOOM'}.to_json).ordered
+
+      LiquidProxy.headers_to_inject = {'X_HACK' => 'KABOOM'}
+    end
+
+    it 'cal clear off headers to inject' do
+      RestClient.should_receive(:delete).with("localhost:#{LiquidProxy.port}")
+      LiquidProxy.headers_to_inject.clear
+    end
+  end
 end
