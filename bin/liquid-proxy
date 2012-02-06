@@ -2,10 +2,11 @@
 
 $: << File.expand_path('../../lib', __FILE__)
 
+require 'em-proxy'
 require 'liquid-proxy/connection'
 
 LIQUID_PROXY_PORT = ARGV[0] || 8998
 
-Proxy.start(:port => LIQUID_PROXY_PORT) do |conn|
+Proxy.start(:host => 'localhost', :port => LIQUID_PROXY_PORT, :debug => true) do |conn|
   LiquidProxy::Connection.setup(conn)
 end

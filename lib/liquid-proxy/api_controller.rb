@@ -17,7 +17,7 @@ class LiquidProxy
 
     def api_call?
       host, port = parser.headers['Host'].split(':')
-      host == 'localhost' && port == ::LIQUID_PROXY_PORT.to_s
+      host =~ /^(localhost|127.0.0.1)$/ && port == ::LIQUID_PROXY_PORT.to_s
     end
   end
 end

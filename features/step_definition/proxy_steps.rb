@@ -9,7 +9,7 @@ end
 When /^an http client makes request to a server via liquid-proxy$/ do
   proxy_class = Net::HTTP::Proxy('localhost', LiquidProxy.port)
   res = proxy_class.start("localhost", TEST_APP_SERVER_PORT) do |http|
-    http.get "/"
+    http.get "/something"
   end
   @request = JSON.parse(res.body)
 end
