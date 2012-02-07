@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["artemave"]
   s.email       = ["artemave@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{http proxy with api for modifying requests passing through}
+  #s.description = %q{http proxy with api for modifying requests passing through}
 
   s.rubyforge_project = "liquid-proxy"
 
@@ -22,4 +22,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "em-proxy"
   s.add_runtime_dependency "http_tools"
   s.add_runtime_dependency "http_parser.rb"
+  s.add_runtime_dependency 'childprocess'
 end

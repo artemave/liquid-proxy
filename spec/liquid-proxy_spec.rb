@@ -4,6 +4,7 @@ require 'liquid-proxy'
 describe LiquidProxy do
   before do
     LiquidProxy::Service.reset_instance
+    LiquidProxy.reset_instance
   end
 
   it 'starts' do
@@ -32,20 +33,26 @@ describe LiquidProxy do
   end
 
   context 'header injection' do
+    let :headers_to_inject do
+      mock('headers_to_inject')
+    end
+
+    before do
+      LiquidProxy::HeadersToInject.stub(:new).and_return(headers_to_inject)
+    end
+
     it 'allows specify header as hash key' do
-      RestClient.should_receive(:post).with("localhost:#{LiquidProxy.port}", {'X_HACK' => 'KABOOM'}.to_json)
+      headers_to_inject.should_receive(:[]=).with('X_HACK', 'KABOOM')
       LiquidProxy.headers_to_inject['X_HACK'] = 'KABOOM'
     end
 
     it 'allows specify headers by assigning hash' do
-      RestClient.should_receive(:delete).with("localhost:#{LiquidProxy.port}").ordered
-      RestClient.should_receive(:post).with("localhost:#{LiquidProxy.port}", {'X_HACK' => 'KABOOM'}.to_json).ordered
-
+      headers_to_inject.should_receive(:set_hash).with('X_HACK' => 'KABOOM')
       LiquidProxy.headers_to_inject = {'X_HACK' => 'KABOOM'}
     end
 
-    it 'cal clear off headers to inject' do
-      RestClient.should_receive(:delete).with("localhost:#{LiquidProxy.port}")
+    it 'clears off list headers to inject' do
+      headers_to_inject.should_receive(:clear)
       LiquidProxy.headers_to_inject.clear
     end
   end

@@ -1,19 +1,30 @@
 require 'singleton'
 require 'liquid-proxy/service'
 require 'json'
-require 'rest-client'
+require 'net/http'
 
 class LiquidProxy
   include Singleton
 
   class HeadersToInject
     def []=(key, value)
-      RestClient.post "localhost:#{LiquidProxy.port}", {key => value}.to_json
+      http.post '/', {key => value}.to_json
+    end
+
+    def set_hash(hash = {})
+      clear
+      http.post '/', hash.to_json unless hash.empty?
     end
 
     def clear
-      RestClient.delete "localhost:#{LiquidProxy.port}"
+      http.delete '/'
     end
+
+    private
+
+      def http
+        @http ||= Net::HTTP.new('127.0.0.1', LiquidProxy.port)
+      end
   end
 
   attr_reader :port
@@ -23,10 +34,7 @@ class LiquidProxy
   end
 
   def headers_to_inject=(hash = {})
-    @headers_to_inject.clear
-    hash.each_pair do |k,v|
-      @headers_to_inject[k] = v
-    end
+    headers_to_inject.set_hash(hash)
   end
 
   def start(opts = {:port => 8998})

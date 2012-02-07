@@ -6,7 +6,4 @@ gemspec
 gem 'rspec'
 gem 'cucumber'
 gem 'awesome_print'
-gem 'rack'
 gem 'thin'
-gem 'childprocess'
-gem 'rest-client'
