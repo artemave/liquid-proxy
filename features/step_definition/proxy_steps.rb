@@ -1,5 +1,5 @@
 Given /^liquid-proxy is running$/ do
-  LiquidProxy.start
+  LiquidProxy.start(:port => 9889)
 end
 
 When /^I instruct liquid\-proxy to add header "([^"]*)" with value "([^"]*)"$/ do |header, value|
