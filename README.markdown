@@ -19,14 +19,32 @@ The following example shows usage with cucumber/selenium. First in env.rb:
     require 'selenium-webdriver'
     require 'liquid-proxy'
     
-    LiquidProxy.start(:port => 9889) 
+    LiquidProxy.start(:port => 9889)
+    
+    Capybara.configure do |config|
+      config.default_driver = :selenium
+      config.run_server = false
+      config.app_host = "http://test.example.com"
+    end
         
     Capybara.register_driver :selenium do |app|
       profile = Selenium::WebDriver::Firefox::Profile.new
       profile.proxy = Selenium::WebDriver::Proxy.new(http: 'localhost:9889', type: :manual)
 
-      Capybara::Selenium::Driver.new(app, :profile => profile)
+      Capybara::Selenium::Driver.new(app, profile: profile)
     end
     
-Then in you steps:
+    Before do
+      LiquidProxy.clear
+    end
     
+Then in step definitions you can:
+    
+    # set headers to inject:
+    LiquidProxy.headers_to_inject = {'Foo' => 'Bar', 'Accept' => 'Cash'}
+    
+    # add to headers to inject:
+    LiquidProxy.headers_to_inject['X_HACKERY'] = 'BOOM'
+    
+    # clear headers to inject:
+    LiquidProxy.clear
