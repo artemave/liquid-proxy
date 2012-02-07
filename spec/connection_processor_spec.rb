@@ -23,7 +23,12 @@ describe LiquidProxy::ConnectionProcessor do
     HEADERS_TO_INJECT = {} unless defined?(HEADERS_TO_INJECT)
     new_request = "new_request#{Time.now}"
     parser = stub(:headers => {'Host' => 'localhost'})
-    conn.stub(:body => (body = mock), :parser => parser, :request_builder => (request_builder = stub))
+    conn.stub(
+      :body => (body = mock),
+      :parser => parser,
+      :request_builder => (request_builder = stub),
+      :api_call? => false
+    )
     request_builder.stub(:build).with(conn.parser, conn.body).and_return(new_request)
 
     body.should_receive(:clear)
@@ -35,7 +40,7 @@ describe LiquidProxy::ConnectionProcessor do
   it 'adds custom headers to requests passing through' do
     headers_to_inject = {'blah' => 'val1', 'boom' => 'val2'}
 
-    conn.stub(:server => nil, :relay_to_servers => nil)
+    conn.stub(:server => nil, :relay_to_servers => nil, :api_call? => false)
     conn.stub(:headers_to_inject => headers_to_inject)
     conn.parser.stub(:headers).and_return(headers = mock.as_null_object)
 
