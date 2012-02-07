@@ -50,9 +50,9 @@ Then in step definitions you can:
     # clear headers to inject:
     LiquidProxy.clear
 
-## Standalone usage.
+## Standalone usage
 
-If you are not usgin ruby, it is possible to run liquid-proxy as a standalone process and controll it via REST API:
+If you are not using ruby, it is possible to run liquid-proxy as a standalone process and controll it via REST API:
 
     # install
     bash$ gem install liquid-proxy
