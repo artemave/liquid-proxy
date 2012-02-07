@@ -9,9 +9,10 @@ Why? I needed it to recreate parts of infrustructure in test environment (namely
 
 ## Usage
 
-This is a ruby gem and it requires ruby >= 1.9.2
+This is a ruby gem and it requires ruby >= 1.9.2.
 
-    bash$ gem install liquid-proxy # or, better, use Gemfile
+    # in Gemfile
+    gem 'liquid-proxy'
     
 The following example shows usage with cucumber/selenium. First in env.rb:
 
@@ -48,3 +49,24 @@ Then in step definitions you can:
     
     # clear headers to inject:
     LiquidProxy.clear
+
+## Standalone usage.
+
+If you are not usgin ruby, it is possible to run liquid-proxy as a standalone process and controll it via REST API:
+
+    # install
+    bash$ gem install liquid-proxy
+    
+    # start
+    bash$ liquid-proxy 8998
+    
+    # add headers
+    bash$ curl --data-binary '{"Foo":"Bar","Accept":"Cash"}' http://localhost:8998
+    
+    # clear headers
+    bash$ curl -X DELETE http://localhost:8998
+    
+
+## Author
+
+[Artem Avetisyan](https://github.com/artemave)
