@@ -25,7 +25,7 @@ require 'capybara'
 require 'selenium-webdriver'
 require 'liquid-proxy'
     
-LiquidProxy.start(:port => 9889)
+LiquidProxy.start(port: 9889)
     
 Capybara.configure do |config|
   config.default_driver = :selenium
