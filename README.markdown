@@ -4,9 +4,9 @@
 
 ## Overview
 
-Start http proxy that you can control via api in order to inject http headers into requests passing through.
+Http proxy that you can instruct via api to inject arbitrary headers into requests passing through.
 
-Why? I needed it to recreate parts of infrustructure in test environment (namely, the app under test was behind the proxy that takes care of authenticating users and passes on its checks in the form of http header).
+Why? I needed it to recreate parts of live infrustructure in test environment (namely, the app under test was behind the proxy that takes care of authenticating users and passes on its checks in the form of http header).
 
 ## Usage
 
@@ -25,21 +25,22 @@ require 'capybara'
 require 'selenium-webdriver'
 require 'liquid-proxy'
     
-LiquidProxy.start(:port => 9889)
+LiquidProxy.start(port: 9889)
     
 Capybara.configure do |config|
   config.default_driver = :selenium
-  config.run_server = false
-  config.app_host = "http://test.example.com"
+  config.run_server     = false
+  config.app_host       = "http://test.example.com"
 end
         
 Capybara.register_driver :selenium do |app|
-  profile = Selenium::WebDriver::Firefox::Profile.new
+  profile       = Selenium::WebDriver::Firefox::Profile.new
   profile.proxy = Selenium::WebDriver::Proxy.new(http: 'localhost:9889', type: :manual)
 
   Capybara::Selenium::Driver.new(app, profile: profile)
 end
-    
+
+# let tests start clean
 Before do
   LiquidProxy.clear
 end
