@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = LiquidProxy::VERSION
   s.authors     = ["artemave"]
   s.email       = ["artemave@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/artemave/liquid-proxy"
   s.summary     = %q{http proxy with api for modifying requests passing through}
   #s.description = %q{http proxy with api for modifying requests passing through}
 
