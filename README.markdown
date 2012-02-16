@@ -42,7 +42,7 @@ end
 
 # let tests start clean
 Before do
-  LiquidProxy.clear
+  LiquidProxy.headers_to_inject.clear
 end
 ```
 
@@ -56,7 +56,7 @@ LiquidProxy.headers_to_inject = {'Foo' => 'Bar', 'Accept' => 'Cash'}
 LiquidProxy.headers_to_inject['X_HACKERY'] = 'BOOM'
     
 # clear headers to inject
-LiquidProxy.clear
+LiquidProxy.headers_to_inject.clear
 ```
 
 ## Standalone usage
