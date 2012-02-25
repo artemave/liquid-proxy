@@ -8,6 +8,9 @@ class LiquidProxy
       @child.start
 
       at_exit do
+        # I don't know why, but without this puts() at_exit is triggered on Ctrl-C when running in spork
+        # even though Subprocess has been started in prefork
+        puts ''
         @child.stop
       end
     end
