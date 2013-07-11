@@ -1,6 +1,7 @@
 # Liquid Proxy
 
 [![Build status](https://secure.travis-ci.org/artemave/liquid-proxy.png)](https://secure.travis-ci.org/artemave/liquid-proxy)
+[![Gem Version](https://badge.fury.io/rb/liquid-proxy.png)](http://badge.fury.io/rb/liquid-proxy)
 
 ## Overview
 
