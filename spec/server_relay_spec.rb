@@ -8,7 +8,7 @@ describe LiquidProxy::ServerRelay do
 
   it 'relays to server usging host and port from incoming request' do
     host, port = 'remotehost', 9876
-    conn.stub(:parser => stub(:headers => {'Host' => "#{host}:#{port}"}))
+    conn.stub(:parser => double(:headers => {'Host' => "#{host}:#{port}"}))
 
     conn.should_receive(:server).with(anything, :host => host, :port => port).ordered
     conn.should_receive(:relay_to_servers).with('new_request').ordered
@@ -17,7 +17,7 @@ describe LiquidProxy::ServerRelay do
   end
 
   it 'uses port 80 by default' do
-    conn.stub(:relay_to_servers => nil, :parser => stub(:headers => {'Host' => "localhost"}))
+    conn.stub(:relay_to_servers => nil, :parser => double(:headers => {'Host' => "localhost"}))
 
     conn.should_receive(:server).with(anything, :host => 'localhost', :port => 80)
 

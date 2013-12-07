@@ -34,7 +34,7 @@ describe LiquidProxy do
 
   context 'header injection' do
     let :headers_to_inject do
-      mock('headers_to_inject')
+      double('headers_to_inject')
     end
 
     before do

@@ -22,9 +22,9 @@ describe LiquidProxy::ApiController do
 
   it 'adds headers to inject' do
     new_headers = {'X_HACK' => 'Boom'}
-    conn.stub(:send_data => nil, :close_connection_after_writing => nil, :parser => stub.as_null_object)
+    conn.stub(:send_data => nil, :close_connection_after_writing => nil, :parser => double.as_null_object)
     conn.stub(:body => new_headers.to_json)
-    conn.stub(:headers_to_inject => (headers_to_inject = mock))
+    conn.stub(:headers_to_inject => (headers_to_inject = double))
 
     headers_to_inject.should_receive(:merge!).with(new_headers)
     conn.process_api_call
@@ -33,7 +33,7 @@ describe LiquidProxy::ApiController do
   it 'clears off headers to inject if api request method is DELETE' do
     conn.stub(:send_data => nil, :close_connection_after_writing => nil)
     conn.stub_chain('parser.http_method').and_return('DELETE')
-    conn.stub(:headers_to_inject => (headers_to_inject = mock))
+    conn.stub(:headers_to_inject => (headers_to_inject = double))
     headers_to_inject.should_receive(:clear)
     conn.process_api_call
   end
@@ -41,7 +41,7 @@ describe LiquidProxy::ApiController do
   it 'relays back to client' do
     response = "response_#{Time.now}"
     HTTPTools::Builder.stub(:response).with(:ok).and_return(response)
-    conn.stub(:headers_to_inject => stub.as_null_object, :parser => stub.as_null_object)
+    conn.stub(:headers_to_inject => double.as_null_object, :parser => double.as_null_object)
 
     conn.should_receive(:send_data).with(response).ordered
     conn.should_receive(:close_connection_after_writing).ordered

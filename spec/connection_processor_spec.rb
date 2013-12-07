@@ -14,7 +14,7 @@ describe LiquidProxy::ConnectionProcessor do
 
   it 'feeds connection data to parser' do
     data = 'data'
-    Http::Parser.stub(:new).and_return(parser = mock)
+    Http::Parser.stub(:new).and_return(parser = double)
     parser.should_receive(:<<).with(data)
     conn.process_data(data)
   end
@@ -22,11 +22,11 @@ describe LiquidProxy::ConnectionProcessor do
   it 'passes request through' do
     HEADERS_TO_INJECT = {} unless defined?(HEADERS_TO_INJECT)
     new_request = "new_request#{Time.now}"
-    parser = stub(:headers => {'Host' => 'localhost'})
+    parser = double(:headers => {'Host' => 'localhost'})
     conn.stub(
-      :body => (body = mock),
+      :body => (body = double),
       :parser => parser,
-      :request_builder => (request_builder = stub),
+      :request_builder => (request_builder = double),
       :api_call? => false
     )
     request_builder.stub(:build).with(conn.parser, conn.body).and_return(new_request)
@@ -42,7 +42,7 @@ describe LiquidProxy::ConnectionProcessor do
 
     conn.stub(:server => nil, :relay_to_servers => nil, :api_call? => false)
     conn.stub(:headers_to_inject => headers_to_inject)
-    conn.parser.stub(:headers).and_return(headers = mock.as_null_object)
+    conn.parser.stub(:headers).and_return(headers = double.as_null_object)
 
     headers.should_receive(:merge!).with(headers_to_inject)
 

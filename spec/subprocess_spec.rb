@@ -17,11 +17,12 @@ describe LiquidProxy::Subprocess do
       ChildProcess.should_receive(:build) do |cmd, *params|
         cmd.should =~ %r{bin/liquid-proxy}
         params.should == ["1234"]
+        child
       end
       LiquidProxy::Subprocess.new(opts)
     end
     it 'inherits io and then starts child' do
-      child.should_receive(:io).ordered.and_return(io = mock)
+      child.should_receive(:io).ordered.and_return(io = double)
       io.should_receive(:inherit!)
       child.should_receive(:start).ordered
       LiquidProxy::Subprocess.new
