@@ -23,7 +23,7 @@ class LiquidProxy
     private
 
       def http
-        @http ||= Net::HTTP.new('127.0.0.1', LiquidProxy.port)
+        @http ||= Net::HTTP.new('localhost', LiquidProxy.port)
       end
   end
 
